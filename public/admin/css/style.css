@@ -1,0 +1,33 @@
+.nxl-header {
+            right: 0;
+            z-index: 1025;
+            position: fixed;
+            left: 284px;
+            color: #eaebef;
+            background: #fff;
+            min-height: 80px;
+            border-bottom: 1px solid #e5e7eb;
+            top: 0;
+        }
+
+        .card {
+            margin-left: 132px;
+            margin-top: 74px;
+        }
+
+        .card-header {
+            padding: 0 !important;
+        }
+        .all_style{
+            margin-top: 100px;
+        }
+        .all_style .heading_margin{
+            margin-top: 10px;
+            margin-bottom: 5px;
+            margin-left: 10px;
+        }
+        .all_style .button{
+            margin-top: 10px;
+            margin-bottom: 5px;
+            margin-right: 10px;
+        }
