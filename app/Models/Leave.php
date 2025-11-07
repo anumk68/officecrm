@@ -15,6 +15,7 @@ class Leave extends Model
         'leave_type',
         'reason',
         'status',
+        'reject_reason',
     ];
     public function user()
     {

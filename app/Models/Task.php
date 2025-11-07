@@ -17,13 +17,26 @@ class Task extends Model
         'priority',
         'status',
         'assigned_to',
-        'assigned_by'
+        'assigned_by',
+        'completed_by',
+        'completed_info',
+    ];
+    protected $casts = [
+        'assigned_to' => 'array',
     ];
 
     public function assignedUser()
     {
-        return $this->belongsTo(User::class, 'assigned_to');
+        return User::whereIn('id', $this->assigned_to ?? [])->get();
     }
+    public function completedBy()
+    {
+        return $this->belongsTo(User::class, 'completed_by');
+    }
+    // public function assignedUser()
+    // {
+    //     return $this->belongsTo(User::class, 'assigned_to');
+    // }
     public function assigner()
     {
         return $this->belongsTo(User::class, 'assigned_by');
@@ -32,5 +45,4 @@ class Task extends Model
     {
         return $this->hasMany(Remark::class);
     }
-
 }

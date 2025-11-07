@@ -1,341 +1,417 @@
 <!doctype html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8" />
-        <title>Register | Dason - Admin & Dashboard Template</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-        <meta content="Themesbrand" name="author" />
-        @include('layouts.app')
-    </head>
+<head>
+    <meta charset="utf-8" />
+    <title>Register | Dason - Admin & Dashboard Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <link rel="shortcut icon" href="{{ asset('public/admin/images/favicon.ico') }}">
+    <link href="{{ asset('public/admin/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css') }}"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('public/admin/css/preloader.min.css') }}">
+    <link href="{{ asset('public/admin/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/admin/css/icons.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/admin/css/app.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/admin/libs/admin-resources/rwd-table/rwd-table.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('public/admin/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('public/admin/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+</head>
 
-    <body data-topbar="dark">
-        <div class="auth-page">
-            <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-xxl-3 col-lg-4 col-md-5">
-                        <div class="auth-full-page-content d-flex p-sm-5 p-4">
-                            <div class="w-100">
-                                <div class="d-flex flex-column h-100">
-                                    <div class="mb-4 mb-md-5 text-center">
-                                        <a href="index.html" class="d-block auth-logo">
-                                            <img src="{{asset('admin/images/logo-sm.svg')}}" alt="" height="28"> <span class="logo-txt">Dason</span>
-                                        </a>
-                                    </div>
-                                    <div class="auth-content my-auto">
-                                        <div class="text-center">
-                                            <h5 class="mb-0">Register Account</h5>
-                                            <p class="text-muted mt-2">Get your free Dason account now.</p>
-                                        </div>
-                                           @if ($errors->any())
-                                            <div class="alert alert-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endif
-                                        <form class="needs-validation mt-4 pt-2" novalidate method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
-    @csrf
-    <div class="form-floating form-floating-custom mb-4">
-        <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Enter Full Name" value="{{ old('full_name') }}" required>
-        <div class="invalid-feedback">
-            Please Enter Full Name
-        </div>
-        <label for="full_name">Full Name</label>
-        <div class="form-floating-icon">
-            <i data-feather="user"></i>
-        </div>
-    </div>
-    <div class="form-floating form-floating-custom mb-4">
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="{{ old('email') }}" required>
-        <div class="invalid-feedback">
-            Please Enter Email
-        </div>
-        <label for="email">Email</label>
-        <div class="form-floating-icon">
-            <i data-feather="mail"></i>
-        </div>
-    </div>
-    <div class="form-floating form-floating-custom mb-4">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
-        <div class="invalid-feedback">
-            Please Enter Password
-        </div>
-        <label for="password">Password</label>
-        <div class="form-floating-icon">
-            <i data-feather="lock"></i>
-        </div>
-    </div>
-    <div class="form-floating form-floating-custom mb-4">
-        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
-        <div class="invalid-feedback">
-            Please Confirm Password
-        </div>
-        <label for="password_confirmation">Confirm Password</label>
-        <div class="form-floating-icon">
-            <i data-feather="lock"></i>
-        </div>
-    </div>
-    <div class="form-floating form-floating-custom mb-4">
-        <input type="file" class="form-control" id="profile_pic" name="profile_pic" placeholder="Upload Profile Picture">
-        <label for="profile_pic">Profile Picture</label>
-        <div class="form-floating-icon">
-            <i data-feather="image"></i>
-        </div>
-    </div>
-    <div class="mb-4">
-        <label class="fw-bold mb-3">Select Role</label>
-        <div class="d-flex align-items-center justify-content-between">
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="role" id="manager" value="manager" {{ old('role') == 'manager' ? 'checked' : '' }} required>
-                <label class="form-check-label" for="manager">Manager</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="role" id="team_leader" value="team_leader" {{ old('role') == 'team_leader' ? 'checked' : '' }}>
-                <label class="form-check-label" for="team_leader">Team Leader</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="role" id="team_member" value="team_member" {{ old('role') == 'team_member' ? 'checked' : '' }}>
-                <label class="form-check-label" for="team_member">Team Member</label>
-            </div>
-        </div>
-    </div>
-    <div class="mb-4">
-        <p class="mb-0">By registering you agree to the Terms <a href="#" class="text-primary">Terms of Use</a></p>
-    </div>
-    <div class="mb-3">
-        <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Register</button>
-    </div>
-</form>
-                                        <div class="mt-5 text-center">
-                                            <p class="text-muted mb-0">Already have an account ? <a href="{{ route('login') }}"
-                                                    class="text-primary fw-semibold"> Login </a> </p>
-                                        </div>
-                                    </div>
-                                  
+<body data-topbar="dark">
+    <div class="auth-page">
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+                <div class="col-xxl-3 col-lg-4 col-md-5">
+                    <div class="auth-full-page-content d-flex p-sm-5 p-4">
+                        <div class="w-100">
+                            <div class="d-flex flex-column h-100">
+                                <div class="mb-4 mb-md-5 text-center">
+                                    <a href="index.html" class="d-block auth-logo">
+                                        <img src="{{asset('public/admin/images/logo-sm.svg')}}" alt="" height="28">
+                                        <span class="logo-txt">Dason</span>
+                                    </a>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-9 col-lg-8 col-md-7">
-                        <div class="auth-bg pt-md-5 p-4 d-flex">
-                            <div class="bg-overlay"></div>
-                            <ul class="bg-bubbles">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <div class="row justify-content-center align-items-end">
-                                <div class="col-xl-7">
-                                    <div class="p-0 p-sm-4 px-xl-0">
-                                        <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel">
-                                            <div class="carousel-indicators auth-carousel carousel-indicators-rounded justify-content-center mb-0">
-                                                <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1">
-                                                    <img src="{{asset('admin/images/users/avatar-1.jpg')}}" class="avatar-md img-fluid rounded-circle d-block" alt="...">
-                                                </button>
-                                                <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2">
-                                                    <img src="{{asset('admin/images/users/avatar-2.jpg')}}" class="avatar-md img-fluid rounded-circle d-block" alt="...">
-                                                </button>
-                                                <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3">
-                                                    <img src="{{asset('admin/images/users/avatar-3.jpg')}}" class="avatar-md img-fluid rounded-circle d-block" alt="...">
-                                                </button>
+                                <div class="auth-content my-auto">
+                                    <div class="text-center">
+                                        <h5 class="mb-0">Register Account</h5>
+                                        <p class="text-muted mt-2">Get your free Dason account now.</p>
+                                    </div>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                    <form class="needs-validation mt-4 pt-2" novalidate method="POST"
+                                        action="{{ route('register') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-floating form-floating-custom mb-4">
+                                            <input type="text" class="form-control" id="full_name" name="full_name"
+                                                placeholder="Enter Full Name" value="{{ old('full_name') }}" required>
+                                            <div class="invalid-feedback">
+                                                Please Enter Full Name
                                             </div>
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <div class="testi-contain text-center text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                                                            imposing change
-                                                            on myself. It's a lot more progressing fun than looking back.
-                                                            That's why
-                                                            I ultricies enim
-                                                            at malesuada nibh diam on tortor neaded to throw curve balls.”
-                                                        </h4>
-                                                        <div class="mt-4 pt-1 pb-5 mb-5">
-                                                            <h5 class="font-size-16 text-white">Richard Drews
-                                                            </h5>
-                                                            <p class="mb-0 text-white-50">Web Designer</p>
-                                                        </div>
-                                                    </div>
+                                            <label for="full_name">Full Name</label>
+                                            <div class="form-floating-icon">
+                                                <i data-feather="user"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating form-floating-custom mb-4">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder="Enter Email" value="{{ old('email') }}" required>
+                                            <div class="invalid-feedback">
+                                                Please Enter Email
+                                            </div>
+                                            <label for="email">Email</label>
+                                            <div class="form-floating-icon">
+                                                <i data-feather="mail"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating form-floating-custom mb-4">
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder="Enter Password" required>
+                                            <div class="invalid-feedback">
+                                                Please Enter Password
+                                            </div>
+                                            <label for="password">Password</label>
+                                            <div class="form-floating-icon">
+                                                <i data-feather="lock"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating form-floating-custom mb-4">
+                                            <input type="password" class="form-control" id="password_confirmation"
+                                                name="password_confirmation" placeholder="Confirm Password" required>
+                                            <div class="invalid-feedback">
+                                                Please Confirm Password
+                                            </div>
+                                            <label for="password_confirmation">Confirm Password</label>
+                                            <div class="form-floating-icon">
+                                                <i data-feather="lock"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating form-floating-custom mb-4">
+                                            <input type="file" class="form-control" id="profile_pic" name="profile_pic"
+                                                placeholder="Upload Profile Picture">
+                                            <label for="profile_pic">Profile Picture</label>
+                                            <div class="form-floating-icon">
+                                                <i data-feather="image"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="fw-bold mb-3">Select Role</label>
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="role"
+                                                        id="manager" value="manager" {{ old('role') == 'manager' ? 'checked' : '' }} required>
+                                                    <label class="form-check-label" for="manager">Manager</label>
                                                 </div>
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-center text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
-                                                            free ourselves by widening our circle of compassion to embrace
-                                                            all living
-                                                            creatures and
-                                                            the whole of quis consectetur nunc sit amet semper justo. nature
-                                                            and its beauty.”</h4>
-                                                        <div class="mt-4 pt-1 pb-5 mb-5">
-                                                            <h5 class="font-size-16 text-white">Rosanna French
-                                                            </h5>
-                                                            <p class="mb-0 text-white-50">Web Developer</p>
-                                                        </div>
-                                                    </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="role"
+                                                        id="team_leader" value="team_leader" {{ old('role') == 'team_leader' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="team_leader">Team
+                                                        Leader</label>
                                                 </div>
-                                                <div class="carousel-item">
-                                                    <div class="testi-contain text-center text-white">
-                                                        <i class="bx bxs-quote-alt-left text-success display-6"></i>
-                                                        <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
-                                                            people will forget what you said, people will forget what you
-                                                            did,
-                                                            but people will never forget
-                                                            how donec in efficitur lectus, nec lobortis metus you made them
-                                                            feel.”</h4>
-                                                        <div class="mt-4 pt-1 pb-5 mb-5">
-                                                            <h5 class="font-size-16 text-white">Ilse R. Eaton</h5>
-                                                            <p class="mb-0 text-white-50">Manager
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="role"
+                                                        id="team_member" value="team_member" {{ old('role') == 'team_member' ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="team_member">Team
+                                                        Member</label>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="mb-4">
+                                            <p class="mb-0">By registering you agree to the Terms <a href="#"
+                                                    class="text-primary">Terms of Use</a></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary w-100 waves-effect waves-light"
+                                                type="submit">Register</button>
+                                        </div>
+                                    </form>
+                                    <div class="mt-5 text-center">
+                                        <p class="text-muted mb-0">Already have an account ?
+                                            <a href="{{ route('login') }}" class="text-primary fw-semibold"> Login </a>
+                                        </p>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="right-bar">
-            <div data-simplebar class="h-100">
-                <div class="rightbar-title d-flex align-items-center p-3">
-                    <h5 class="m-0 me-2">Theme Customizer</h5>
-                    <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
-                        <i class="mdi mdi-close noti-icon"></i>
-                    </a>
-                </div>
-                <hr class="m-0" />
-                <div class="p-4">
-                    <h6 class="mb-3">Select Custome Colors</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input theme-color" type="radio" name="theme-mode"
-                            id="theme-default" value="default" onchange="document.documentElement.setAttribute('data-theme-mode', 'default')" checked>
-                        <label class="form-check-label" for="theme-default">Default</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input theme-color" type="radio" name="theme-mode"
-                            id="theme-red" value="red" onchange="document.documentElement.setAttribute('data-theme-mode', 'red')">
-                        <label class="form-check-label" for="theme-red">Red</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input theme-color" type="radio" name="theme-mode"
-                            id="theme-purple" value="purple" onchange="document.documentElement.setAttribute('data-theme-mode', 'purple')">
-                        <label class="form-check-label" for="theme-purple">Purple</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2">Layout</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout"
-                            id="layout-vertical" value="vertical">
-                        <label class="form-check-label" for="layout-vertical">Vertical</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout"
-                            id="layout-horizontal" value="horizontal">
-                        <label class="form-check-label" for="layout-horizontal">Horizontal</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-mode"
-                            id="layout-mode-light" value="light">
-                        <label class="form-check-label" for="layout-mode-light">Light</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-mode"
-                            id="layout-mode-dark" value="dark">
-                        <label class="form-check-label" for="layout-mode-dark">Dark</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2">Layout Width</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-width"
-                            id="layout-width-fuild" value="fuild" onchange="document.body.setAttribute('data-layout-size', 'fluid')">
-                        <label class="form-check-label" for="layout-width-fuild">Fluid</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-width"
-                            id="layout-width-boxed" value="boxed" onchange="document.body.setAttribute('data-layout-size', 'boxed'),document.body.setAttribute('data-sidebar-size', 'sm')">
-                        <label class="form-check-label" for="layout-width-boxed">Boxed</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2">Layout Position</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-position"
-                            id="layout-position-fixed" value="fixed" onchange="document.body.setAttribute('data-layout-scrollable', 'false')">
-                        <label class="form-check-label" for="layout-position-fixed">Fixed</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-position"
-                            id="layout-position-scrollable" value="scrollable" onchange="document.body.setAttribute('data-layout-scrollable', 'true')">
-                        <label class="form-check-label" for="layout-position-scrollable">Scrollable</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2">Topbar Color</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="topbar-color"
-                            id="topbar-color-light" value="light" onchange="document.body.setAttribute('data-topbar', 'light')">
-                        <label class="form-check-label" for="topbar-color-light">Light</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="topbar-color"
-                            id="topbar-color-dark" value="dark" onchange="document.body.setAttribute('data-topbar', 'dark')">
-                        <label class="form-check-label" for="topbar-color-dark">Dark</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Size</h6>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-size"
-                            id="sidebar-size-default" value="default" onchange="document.body.setAttribute('data-sidebar-size', 'lg')">
-                        <label class="form-check-label" for="sidebar-size-default">Default</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-size"
-                            id="sidebar-size-compact" value="compact" onchange="document.body.setAttribute('data-sidebar-size', 'md')">
-                        <label class="form-check-label" for="sidebar-size-compact">Compact</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-size"
-                            id="sidebar-size-small" value="small" onchange="document.body.setAttribute('data-sidebar-size', 'sm')">
-                        <label class="form-check-label" for="sidebar-size-small">Small (Icon View)</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Color</h6>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-color"
-                            id="sidebar-color-light" value="light" onchange="document.body.setAttribute('data-sidebar', 'light')">
-                        <label class="form-check-label" for="sidebar-color-light">Light</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-color"
-                            id="sidebar-color-dark" value="dark" onchange="document.body.setAttribute('data-sidebar', 'dark')">
-                        <label class="form-check-label" for="sidebar-color-dark">Dark</label>
-                    </div>
-                    <div class="form-check sidebar-setting">
-                        <input class="form-check-input" type="radio" name="sidebar-color"
-                            id="sidebar-color-brand" value="brand" onchange="document.body.setAttribute('data-sidebar', 'brand')">
-                        <label class="form-check-label" for="sidebar-color-brand">Brand</label>
-                    </div>
-                    <h6 class="mt-4 mb-3 pt-2">Direction</h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-direction"
-                            id="layout-direction-ltr" value="ltr">
-                        <label class="form-check-label" for="layout-direction-ltr">LTR</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout-direction"
-                            id="layout-direction-rtl" value="rtl">
-                        <label class="form-check-label" for="layout-direction-rtl">RTL</label>
+                <div class="col-xxl-9 col-lg-8 col-md-7">
+                    <div class="auth-bg pt-md-5 p-4 d-flex">
+                        <div class="bg-overlay"></div>
+                        <ul class="bg-bubbles">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        <div class="row justify-content-center align-items-end">
+                            <div class="col-xl-7">
+                                <div class="p-0 p-sm-4 px-xl-0">
+                                    <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel">
+                                        <div
+                                            class="carousel-indicators auth-carousel carousel-indicators-rounded justify-content-center mb-0">
+                                            <button type="button" data-bs-target="#reviewcarouselIndicators"
+                                                data-bs-slide-to="0" class="active" aria-current="true"
+                                                aria-label="Slide 1">
+                                                <img src="{{asset('public/admin/images/users/avatar-1.jpg')}}"
+                                                    class="avatar-md img-fluid rounded-circle d-block" alt="...">
+                                            </button>
+                                            <button type="button" data-bs-target="#reviewcarouselIndicators"
+                                                data-bs-slide-to="1" aria-label="Slide 2">
+                                                <img src="{{asset('public/admin/images/users/avatar-2.jpg')}}"
+                                                    class="avatar-md img-fluid rounded-circle d-block" alt="...">
+                                            </button>
+                                            <button type="button" data-bs-target="#reviewcarouselIndicators"
+                                                data-bs-slide-to="2" aria-label="Slide 3">
+                                                <img src="{{asset('public/admin/images/users/avatar-3.jpg')}}"
+                                                    class="avatar-md img-fluid rounded-circle d-block" alt="...">
+                                            </button>
+                                        </div>
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <div class="testi-contain text-center text-white">
+                                                    <i class="bx bxs-quote-alt-left text-success display-6"></i>
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
+                                                        imposing change
+                                                        on myself. It's a lot more progressing fun than looking back.
+                                                        That's why
+                                                        I ultricies enim
+                                                        at malesuada nibh diam on tortor neaded to throw curve balls.”
+                                                    </h4>
+                                                    <div class="mt-4 pt-1 pb-5 mb-5">
+                                                        <h5 class="font-size-16 text-white">Richard Drews
+                                                        </h5>
+                                                        <p class="mb-0 text-white-50">Web Designer</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <div class="testi-contain text-center text-white">
+                                                    <i class="bx bxs-quote-alt-left text-success display-6"></i>
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
+                                                        free ourselves by widening our circle of compassion to embrace
+                                                        all living
+                                                        creatures and
+                                                        the whole of quis consectetur nunc sit amet semper justo. nature
+                                                        and its beauty.”</h4>
+                                                    <div class="mt-4 pt-1 pb-5 mb-5">
+                                                        <h5 class="font-size-16 text-white">Rosanna French
+                                                        </h5>
+                                                        <p class="mb-0 text-white-50">Web Developer</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="carousel-item">
+                                                <div class="testi-contain text-center text-white">
+                                                    <i class="bx bxs-quote-alt-left text-success display-6"></i>
+                                                    <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
+                                                        people will forget what you said, people will forget what you
+                                                        did,
+                                                        but people will never forget
+                                                        how donec in efficitur lectus, nec lobortis metus you made them
+                                                        feel.”</h4>
+                                                    <div class="mt-4 pt-1 pb-5 mb-5">
+                                                        <h5 class="font-size-16 text-white">Ilse R. Eaton</h5>
+                                                        <p class="mb-0 text-white-50">Manager
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+    <div class="right-bar">
+        <div data-simplebar class="h-100">
+            <div class="rightbar-title d-flex align-items-center p-3">
+                <h5 class="m-0 me-2">Theme Customizer</h5>
+                <a href="javascript:void(0);" class="right-bar-toggle ms-auto">
+                    <i class="mdi mdi-close noti-icon"></i>
+                </a>
+            </div>
+            <hr class="m-0" />
+            <div class="p-4">
+                <h6 class="mb-3">Select Custome Colors</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input theme-color" type="radio" name="theme-mode" id="theme-default"
+                        value="default" onchange="document.documentElement.setAttribute('data-theme-mode', 'default')"
+                        checked>
+                    <label class="form-check-label" for="theme-default">Default</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input theme-color" type="radio" name="theme-mode" id="theme-red"
+                        value="red" onchange="document.documentElement.setAttribute('data-theme-mode', 'red')">
+                    <label class="form-check-label" for="theme-red">Red</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input theme-color" type="radio" name="theme-mode" id="theme-purple"
+                        value="purple" onchange="document.documentElement.setAttribute('data-theme-mode', 'purple')">
+                    <label class="form-check-label" for="theme-purple">Purple</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2">Layout</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout" id="layout-vertical" value="vertical">
+                    <label class="form-check-label" for="layout-vertical">Vertical</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout" id="layout-horizontal"
+                        value="horizontal">
+                    <label class="form-check-label" for="layout-horizontal">Horizontal</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-mode" id="layout-mode-light"
+                        value="light">
+                    <label class="form-check-label" for="layout-mode-light">Light</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-mode" id="layout-mode-dark" value="dark">
+                    <label class="form-check-label" for="layout-mode-dark">Dark</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2">Layout Width</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-width" id="layout-width-fuild"
+                        value="fuild" onchange="document.body.setAttribute('data-layout-size', 'fluid')">
+                    <label class="form-check-label" for="layout-width-fuild">Fluid</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-width" id="layout-width-boxed"
+                        value="boxed"
+                        onchange="document.body.setAttribute('data-layout-size', 'boxed'),document.body.setAttribute('data-sidebar-size', 'sm')">
+                    <label class="form-check-label" for="layout-width-boxed">Boxed</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2">Layout Position</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-position" id="layout-position-fixed"
+                        value="fixed" onchange="document.body.setAttribute('data-layout-scrollable', 'false')">
+                    <label class="form-check-label" for="layout-position-fixed">Fixed</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-position" id="layout-position-scrollable"
+                        value="scrollable" onchange="document.body.setAttribute('data-layout-scrollable', 'true')">
+                    <label class="form-check-label" for="layout-position-scrollable">Scrollable</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2">Topbar Color</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="topbar-color" id="topbar-color-light"
+                        value="light" onchange="document.body.setAttribute('data-topbar', 'light')">
+                    <label class="form-check-label" for="topbar-color-light">Light</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="topbar-color" id="topbar-color-dark" value="dark"
+                        onchange="document.body.setAttribute('data-topbar', 'dark')">
+                    <label class="form-check-label" for="topbar-color-dark">Dark</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Size</h6>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-size" id="sidebar-size-default"
+                        value="default" onchange="document.body.setAttribute('data-sidebar-size', 'lg')">
+                    <label class="form-check-label" for="sidebar-size-default">Default</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-size" id="sidebar-size-compact"
+                        value="compact" onchange="document.body.setAttribute('data-sidebar-size', 'md')">
+                    <label class="form-check-label" for="sidebar-size-compact">Compact</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-size" id="sidebar-size-small"
+                        value="small" onchange="document.body.setAttribute('data-sidebar-size', 'sm')">
+                    <label class="form-check-label" for="sidebar-size-small">Small (Icon View)</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2 sidebar-setting">Sidebar Color</h6>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color-light"
+                        value="light" onchange="document.body.setAttribute('data-sidebar', 'light')">
+                    <label class="form-check-label" for="sidebar-color-light">Light</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color-dark"
+                        value="dark" onchange="document.body.setAttribute('data-sidebar', 'dark')">
+                    <label class="form-check-label" for="sidebar-color-dark">Dark</label>
+                </div>
+                <div class="form-check sidebar-setting">
+                    <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color-brand"
+                        value="brand" onchange="document.body.setAttribute('data-sidebar', 'brand')">
+                    <label class="form-check-label" for="sidebar-color-brand">Brand</label>
+                </div>
+                <h6 class="mt-4 mb-3 pt-2">Direction</h6>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-direction" id="layout-direction-ltr"
+                        value="ltr">
+                    <label class="form-check-label" for="layout-direction-ltr">LTR</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="layout-direction" id="layout-direction-rtl"
+                        value="rtl">
+                    <label class="form-check-label" for="layout-direction-rtl">RTL</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ asset('public/admin/libs/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/metismenu/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/simplebar/simplebar.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/node-waves/waves.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/feather-icons/feather.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/pace-js/pace.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}">
+    </script>
+    <script
+        src="{{ asset('public/admin/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js') }}"> </script>
+    <script src="{{ asset('public/admin/js/pages/allchart.js') }}"></script>
+    <script src="{{ asset('public/admin/js/pages/dashboard.init.js') }}"></script>
+    <script src="{{ asset('public/admin/js/app.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/admin-resources/rwd-table/rwd-table.min.js') }}"></script>
+    <script src="{{ asset('public/admin/js/pages/table-responsive.init.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net-buttons/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script
+        src="{{ asset('public/admin/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('public/admin/libs/jquery.repeater/jquery.repeater.min.js') }}"></script>
+    <script src="{{ asset('public/admin/js/pages/task-create.init.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+</body>
+
 </html>

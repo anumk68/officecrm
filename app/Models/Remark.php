@@ -9,7 +9,7 @@ class Remark extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['task_id', 'user_id', 'text']; // Add 'user_id' to fillable, as you're setting it.
+    protected $fillable = ['task_id', 'user_id', 'text'];
 
     public function task()
     {
@@ -18,6 +18,6 @@ class Remark extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class); // Add a relationship to the User model
+        return $this->belongsTo(User::class); 
     }
 }

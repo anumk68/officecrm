@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model
 {
-    //
     protected $fillable = [
         "user_id",
         "role",
@@ -14,7 +13,6 @@ class Attendance extends Model
         "logout_time",
         "status",
     ];
-
      public function user()
     {
         return $this->belongsTo(User::class);

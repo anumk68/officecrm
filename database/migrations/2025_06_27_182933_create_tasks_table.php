@@ -19,18 +19,21 @@ return new class extends Migration
         $table->date('deadline');
         $table->enum('priority', ['Low', 'Medium', 'High'])->default('Medium');
         $table->enum('status', ['Pending', 'In Progress', 'Completed'])->default('Pending');
-        $table->unsignedBigInteger('assigned_to')->nullable();
+        $table->json('assigned_to')->nullable();
+        $table->string('completed_by')->nullable();
+        $table->text('completed_info')->nullable();
+        
         $table->softDeletes();
         $table->timestamps();
     });
 
     // Add foreign key constraint separately
-    Schema::table('tasks', function (Blueprint $table) {
-        $table->foreign('assigned_to')
-              ->references('id')
-              ->on('users')
-              ->onDelete('set null');
-    });
+    // Schema::table('tasks', function (Blueprint $table) {
+    //     $table->foreign('assigned_to')
+    //           ->references('id')
+    //           ->on('users')
+    //           ->onDelete('set null');
+    // });
     }
     /**
      * Reverse the migrations.

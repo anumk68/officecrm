@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('employees', function (Blueprint $table) {
@@ -14,7 +13,7 @@ return new class extends Migration
             $table->string('position');
             $table->enum('status', ['Active', 'Inactive'])->default('Active');
             $table->string('email')->unique();
-            $table->string('password'); // plain text allowed
+            $table->string('password');
             $table->enum('role', ['manager', 'hr', 'team_leader', 'team_member'])->default('team_member');
             $table->timestamps();
         });
