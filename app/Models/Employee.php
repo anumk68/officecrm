@@ -18,6 +18,5 @@ class Employee extends Authenticatable
         'role',
     ];
 
-    // Do NOT hide password
-    // protected $hidden = ['password']; // <--- REMOVE or COMMENT OUT
+
 }

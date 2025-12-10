@@ -6,51 +6,47 @@ use App\Models\Remark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
-use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class RemarkController extends Controller
 {
-    // public function storeRemark(Request $request, $taskId)
-    // {
-    //     $request->validate([
-    //         'text' => 'required|string|max:1000',
-    //     ]);
-    //     $remark = new Remark();
-    //     $remark->task_id = $taskId;
-    //     $remark->user_id = Auth::id();
-    //     $remark->text = $request->text;
-    //     $remark->save();
-    //     return response()->json([
-    //         'success' => true,
-    //         'remarks' => Remark::where('task_id', $taskId)
-    //             ->latest()
-    //             ->with('user:id,name')
-    //             ->get(['id', 'text', 'user_id']),
-    //     ]);
-    // }
+    /**
+     * Delete a remark
+     */
     public function destroy($id)
     {
-        $remark = Remark::findOrFail($id);
-        if ($remark->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized action.');
+        try {
+            $remark = Remark::findOrFail($id);
+            $remark->delete();
+            return redirect()->back()->with('success', 'Remark deleted successfully.');
+        } catch (\Exception $e) {
+            Log::error("Remark delete failed: " . $e->getMessage());
+            return back()->with("error", "Failed to delete remark.");
         }
-        $remark->delete();
-        return redirect()->back()->with('success', 'Remark deleted successfully.');
     }
+
+    /**
+     * Add a new remark to a task
+     */
     public function updateRemarks(Request $request, $taskId)
     {
         $request->validate([
             'text' => 'required|string|max:1000',
         ]);
-        $task = Task::find($taskId);
-        $remark = new Remark();
-        $remark->task_id = $task->id;
-        $remark->user_id = Auth::id();
-        $remark->text = $request->text;
-        $remark->save();
-        return response()->json([
-            'success' => true,
-            'remarks' => $task->remarks()->latest()->get(),
-        ]);
+
+        try {
+            $task = Task::findOrFail($taskId);
+
+            $remark = new Remark();
+            $remark->task_id = $task->id;
+            $remark->user_id = Auth::id();
+            $remark->text    = $request->text;
+            $remark->save();
+
+            return redirect()->back()->with('success', 'Remark added successfully.');
+        } catch (\Exception $e) {
+            Log::error("Remark add failed: " . $e->getMessage());
+            return back()->withInput()->with("error", "Failed to add remark.");
+        }
     }
 }

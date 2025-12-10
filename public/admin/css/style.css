@@ -1,0 +1,819 @@
+ /*
+
+ ==================== GLOBAL MOBILE RESPONSIVE ==================== */
+ @media (max-width: 768px) {
+
+     /* Main container padding reduce */
+     .container,
+     .container-fluid {
+         padding-left: 10px !important;
+         padding-right: 10px !important;
+     }
+
+     /* Tabs full width */
+     .nav-tabs .nav-link {
+         width: 100%;
+         text-align: left;
+         margin-bottom: 5px;
+     }
+
+     /* Profile image center */
+     #overview .col-md-4 {
+         text-align: center !important;
+     }
+
+     #overview img {
+         width: 120px !important;
+         height: 120px !important;
+     }
+
+     /* Right side details table responsive */
+     #overview .col-md-8 {
+         margin-top: 20px;
+     }
+
+     /* Make table labels vertical spacing better */
+     table.table-borderless th,
+     table.table-borderless td {
+         display: block;
+         width: 100%;
+     }
+
+     table.table-borderless th {
+         font-weight: bold;
+         margin-top: 10px;
+     }
+
+     /* Edit form inputs 100% width */
+     form .form-control,
+     form input,
+     form textarea,
+     form select {
+         width: 100% !important;
+     }
+
+     /* File upload layout fix */
+     .d-flex.gap-2 {
+         flex-direction: column !important;
+     }
+
+     /* Remove button 100% width */
+     #removeImageBtn {
+         width: 100%;
+     }
+
+     /* Profile image preview adjust */
+     #previewImage {
+         margin: 0 auto !important;
+         display: block;
+     }
+
+     /* Buttons full width */
+     /* .btn {
+         width: 100% !important;
+     } */
+
+     /* Card spacing */
+     .card-body {
+         padding: 15px !important;
+     }
+
+     /* Tabs margin fix */
+     .tab-content {
+         margin-top: 15px !important;
+     }
+
+     /* Prevent overflow */
+     body,
+     html {
+         overflow-x: hidden !important;
+     }
+ }
+
+ /* ==================== TABLET RESPONSIVE (Below 992px) ==================== */
+ @media (max-width: 992px) {
+     #overview .col-md-8 {
+         margin-top: 20px;
+     }
+ }
+
+
+
+
+ /* ============================
+   GLOBAL DATATABLE RESPONSIVE
+   ============================ */
+
+ @media (max-width: 991px) {
+
+     /* Hide Table Head */
+     #datatable thead {
+         display: none !important;
+     }
+
+     /* Table Row becomes CARD */
+     #datatable tbody tr {
+         display: block;
+         margin-bottom: 15px;
+         background: #ffffff;
+         border-radius: 12px;
+         padding: 12px 12px;
+         border: 1px solid #e0e0e0;
+         box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+     }
+
+     /* Table Cells become FLEX ROW */
+     #datatable tbody td {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 8px 6px;
+         width: 100%;
+         border-bottom: 1px dashed #ddd;
+         font-size: 14px;
+     }
+
+     /* Remove last border */
+     #datatable tbody td:last-child {
+         border-bottom: none;
+     }
+
+     /* Data label auto injected */
+     #datatable tbody td::before {
+         content: attr(data-label);
+         font-weight: 600;
+         color: #444;
+         font-size: 14px;
+         text-transform: capitalize;
+     }
+
+     /* Improve table layout spacing */
+     #datatable tbody td span,
+     #datatable tbody td a,
+     #datatable tbody td div {
+         text-align: right;
+         /* flex-grow: 1; */
+         margin-left: 10px;
+     }
+
+     /* Fix for search + paginations */
+     .dataTables_wrapper {
+         overflow-x: visible !important;
+         padding-bottom: 20px;
+     }
+
+     /* ===== CUSTOM DROPDOWN FIX ===== */
+     .custom-dropdown {
+         width: 100%;
+         text-align: right;
+     }
+
+     .custom-toggle {
+         width: 100%;
+         justify-content: space-between;
+         display: flex;
+         align-items: center;
+     }
+
+     .custom-dropdown-menu {
+         position: relative !important;
+         bottom: auto !important;
+         top: 10px !important;
+         width: 100% !important;
+         right: 0 !important;
+         left: 0 !important;
+         border-radius: 10px !important;
+         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+         overflow: hidden;
+     }
+
+     .custom-dropdown-menu a {
+         padding: 12px 15px;
+         border-bottom: 1px solid #eee;
+     }
+
+     .custom-dropdown-menu a:last-child {
+         border-bottom: none;
+     }
+
+     table#datatable {
+         border: none;
+
+     }
+
+     /* tr.odd {
+    margin-right: -22px;
+}
+     tr.even{
+    margin-right: -22px;
+} */
+
+
+
+ }
+
+ /* Additional minor styling */
+ #datatable tbody td {
+     vertical-align: middle;
+ }
+
+
+
+
+ /* ============================
+   ATTENDANCE PAGE RESPONSIVE
+   ============================ */
+ @media (max-width: 768px) {
+
+     /* Two-column layout becomes single column */
+     .col-lg-8,
+     .col-lg-4 {
+         width: 100% !important;
+         flex: 0 0 100% !important;
+         max-width: 100% !important;
+     }
+
+     /* Card spacing improvement */
+     .card,
+     .container-fluid .card {
+         margin-bottom: 20px !important;
+     }
+
+     /* Logout Button + Attendance History buttons stacking */
+     .float-end,
+     .mb-3 a,
+     .mb-3 button {
+         width: 100% !important;
+     }
+
+     /* Attendance History button full width */
+     .btn.btn-primary,
+     #logoutBtn {
+         /* width: 100% !important; */
+         margin-bottom: 10px !important;
+     }
+
+     /* Calendar container responsive */
+     #calendar {
+         overflow-x: auto !important;
+         width: 100% !important;
+     }
+
+     /* FullCalendar header adjustment */
+     .fc-toolbar.fc-header-toolbar {
+         flex-direction: column !important;
+         gap: 10px;
+         text-align: center;
+     }
+
+     /* Title center */
+     .fc-toolbar-title {
+         font-size: 18px !important;
+         text-align: center !important;
+         width: 100% !important;
+     }
+
+     /* Calendar next/prev buttons centered */
+     .fc-prev-button,
+     .fc-next-button,
+     .fc-button-group {
+         width: 100% !important;
+         justify-content: center !important;
+         display: flex !important;
+     }
+
+     /* Calendar grid spacing */
+     .fc-daygrid-day {
+         min-height: 65px !important;
+     }
+
+     /* Tooltip fix */
+     .tooltip {
+         max-width: 200px !important;
+         font-size: 13px !important;
+     }
+ }
+
+
+
+ @media (max-width: 992px) {
+
+     .fc-toolbar.fc-header-toolbar {
+         flex-direction: column !important;
+         gap: 10px !important;
+         text-align: center !important;
+     }
+
+     .fc-prev-button,
+     .fc-next-button,
+     .fc-button-group {
+         display: flex !important;
+         justify-content: center !important;
+     }
+ }
+
+
+
+ /* ============================
+   REMARKS PAGE RESPONSIVE
+   ============================ */
+ @media (max-width: 991px) {
+
+     /* Make filter form vertical */
+     .card-header form.d-flex {
+         flex-direction: column !important;
+         gap: 10px !important;
+         width: 100%;
+     }
+
+     .card-header input[type="month"],
+     .card-header button {
+         width: 100% !important;
+     }
+
+     /* Back button full width */
+     .card .btn-info {
+         /* width: 100% !important; */
+         margin-bottom: 10px;
+     }
+
+
+ }
+
+
+
+
+ /* ============================================================
+   RESPONSIVE FIXES FOR TIMER, DROPDOWN, CARDS (GLOBAL)
+   ============================================================ */
+
+ /* ---------- TABLET (max-width: 992px) ---------- */
+ @media (max-width: 992px) {
+
+     /* Timer big top container */
+     .timer-container {
+         flex-wrap: wrap;
+         gap: 15px;
+         padding: 12px 15px !important;
+     }
+
+     .timer-container>.d-flex {
+         flex: 1 1 100%;
+         justify-content: center;
+     }
+
+     /* Dropdown width */
+     .cl-dropdown-menu {
+         width: 800px !important;
+         max-width: 90vw !important;
+         left: 50% !important;
+         transform: translateX(-50%) !important;
+     }
+
+     /* Task logs wrapper spacing */
+     #task-log-table {
+         padding: 0 10px !important;
+     }
+ }
+
+
+
+ /* ---------- MOBILE (max-width: 768px) ---------- */
+ @media (max-width: 768px) {
+
+     /* Fix main timer box layout */
+     .timer-container {
+         flex-direction: column;
+         align-items: stretch !important;
+         padding: 14px !important;
+         gap: 12px !important;
+     }
+
+     /* Timer text input center */
+     .timer-input {
+         width: 100% !important;
+         font-size: 1rem !important;
+         text-align: left;
+     }
+
+     /* Buttons full width on mobile */
+     .start-btn,
+     .stop-btn,
+     .tag-btn,
+     .project-btn {
+         width: 100% !important;
+         padding: 10px !important;
+         font-size: 15px !important;
+     }
+
+     /* Tracker box */
+     .tracker-box {
+         width: 100% !important;
+         font-size: 1rem !important;
+         padding: 10px 0 !important;
+     }
+
+     /* Dropdown fix */
+     .cl-dropdown-menu {
+         width: 95% !important;
+         max-width: 95vw !important;
+         left: 50% !important;
+         transform: translateX(-50%) !important;
+     }
+
+     .cl-dropdown-item {
+         padding: 10px 5px !important;
+     }
+
+     /* Task inside dropdown */
+     .task-item {
+         flex-direction: column !important;
+         align-items: flex-start !important;
+         gap: 4px !important;
+         width: 100%;
+     }
+
+     /* Task list modal */
+     .modal-dialog {
+         width: 95% !important;
+         margin: auto !important;
+     }
+
+     /* Weekly boxes */
+     .week-header,
+     .day-header {
+         font-size: 15px !important;
+         padding: 8px 12px !important;
+     }
+
+     /* Card padding reduce */
+     .card {
+         margin-bottom: 15px !important;
+         padding: 0 !important;
+     }
+
+     /* Task logs inner card */
+     .task-log-card {
+         padding: 12px !important;
+         margin-bottom: 12px !important;
+         border-radius: 12px !important;
+     }
+
+     /* Weekly title badges */
+     .time-badge {
+         font-size: 12px !important;
+         padding: 3px 6px !important;
+     }
+
+     /* Fix overflow */
+     body,
+     html {
+         overflow-x: hidden !important;
+     }
+ }
+
+
+
+ /* ---------- SMALL MOBILE (max-width: 576px) ---------- */
+ @media (max-width: 576px) {
+
+     /* Full width timer container */
+     .timer-container {
+         padding: 10px !important;
+         gap: 10px !important;
+     }
+
+     .d-flex.align-items-center.gap-3 {
+         flex-direction: column !important;
+         width: 100%;
+         gap: 12px !important;
+     }
+
+     /* Buttons full width */
+     .project-btn,
+     .tag-btn,
+     .start-btn,
+     .stop-btn {
+         width: 100% !important;
+         font-size: 15px !important;
+         padding: 10px !important;
+     }
+
+     /* Dropdown */
+     .cl-dropdown-menu {
+         width: 100% !important;
+         max-height: 70vh !important;
+         overflow-y: auto !important;
+     }
+
+     .cl-search-box input {
+         padding: 10px !important;
+         font-size: 14px !important;
+     }
+
+     /* Log table */
+     #task-log-table table {
+         width: 100%;
+         display: block;
+         overflow-x: auto;
+     }
+
+     /* Fix cards */
+     .task-log-card {
+         font-size: 14px !important;
+         padding: 10px !important;
+     }
+
+     /* Extra time alert */
+     #overtime-alert {
+         width: 100% !important;
+         margin-left: 0 !important;
+         font-size: 14px !important;
+         padding: 8px !important;
+     }
+ }
+
+
+ /* Responsive width */
+ @media (max-width: 768px) {
+     .cl-dropdown-menu {
+         width: 900px !important;
+         min-width: auto !important;
+         left: auto;
+         transform: translateX(-50%) !important;
+     }
+ }
+
+
+ .table-responsive.fixed-solution {
+     border: none !important;
+ }
+
+
+
+ /* =======================================
+   EMPLOYEE DETAIL PAGE - UNIQUE STYLING
+   ======================================= */
+ .employee-detail-page .card {
+     border-radius: 10px;
+ }
+
+ /* Large screens */
+ @media (max-width: 992px) {
+     .employee-detail-page .container {
+         margin-left: 0 !important;
+     }
+ }
+
+ /* Tablet + Mobile */
+ @media (max-width: 768px) {
+
+     .employee-detail-page .container.py-5 {
+         margin-top: 40px !important;
+     }
+
+     .employee-detail-page .card-body {
+         padding: 15px !important;
+     }
+
+     .employee-detail-page .col-md-6 {
+         width: 100%;
+     }
+
+     .employee-detail-page .img-thumbnail {
+         width: 100% !important;
+         max-width: 280px;
+         height: auto;
+         display: block;
+         margin: auto;
+     }
+
+     .employee-detail-page .mt-4 a.btn {
+         width: 100% !important;
+         margin-bottom: 10px;
+     }
+
+     .employee-detail-page h4 {
+         font-size: 20px;
+     }
+ }
+
+ /* Very small screens */
+ @media (max-width: 480px) {
+     .employee-detail-page .img-thumbnail {
+         max-width: 230px;
+     }
+ }
+
+
+
+
+ /* ===================================
+   ATTENDANCE HEADER RESPONSIVE
+   =================================== */
+
+ .attendance-header {
+     gap: 15px;
+ }
+
+ /* Desktop heading reduce a bit */
+ .attendance-header h3 {
+     font-size: 22px;
+     margin: 0;
+ }
+
+ /* Mobile Responsive */
+ @media (max-width: 768px) {
+
+     .attendance-header {
+         flex-direction: column !important;
+         align-items: flex-start !important;
+         text-align: left !important;
+     }
+
+     .attendance-header h3 {
+         font-size: 18px;
+         width: 100%;
+     }
+
+     .attendance-header .attendance-month-form {
+         width: 100%;
+     }
+
+     .attendance-header .attendance-month-form select {
+         width: 100%;
+         font-size: 16px;
+         padding: 10px;
+     }
+ }
+
+ /* Small screens */
+ @media (max-width: 480px) {
+     .attendance-header h3 {
+         font-size: 16px;
+     }
+ }
+
+ /* ============================
+   ATTENDANCE EXPORT RESPONSIVE 
+   ============================ */
+
+ @media (max-width: 768px) {
+
+     /* Parent container becomes block */
+     .attendance-export-box {
+         flex-direction: column !important;
+         align-items: flex-start !important;
+     }
+
+     /* Form full width + stacked */
+     .attendance-export-form {
+         width: 100% !important;
+         margin-top: 10px;
+         display: block !important;
+     }
+
+     .attendance-export-form .col-auto {
+         width: 100% !important;
+         margin-bottom: 10px;
+     }
+
+     .attendance-export-form label {
+         font-size: 14px;
+         margin-bottom: 3px;
+     }
+
+     .attendance-export-form input {
+         width: 100% !important;
+     }
+
+     .attendance-export-form button {
+         width: 100% !important;
+         margin-top: 5px;
+     }
+ }
+
+ /* Extra small screens */
+ @media (max-width: 480px) {
+     .attendance-export-form input {
+         font-size: 14px;
+         padding: 8px;
+     }
+ }
+
+
+ /* ================================
+   PROJECT ACTIONS RESPONSIVE
+================================ */
+
+ @media (max-width: 768px) {
+
+     /* Parent flex → column */
+     .project-action-box {
+         flex-direction: column !important;
+         gap: 10px !important;
+         align-items: flex-start !important;
+     }
+
+     /* Add Project Button full width */
+     .project-action-box .project-add-btn button {
+         width: 100% !important;
+     }
+
+     /* Delete form full width */
+     .project-action-box .project-delete-form {
+         width: 100% !important;
+     }
+
+     .project-action-box .project-delete-form button {
+         width: 100% !important;
+     }
+ }
+
+
+ /* ========== MOBILE RESPONSIVE (Below 768px) ========== */
+ @media (max-width: 768px) {
+
+     /* Hide FULLSCREEN on mobile */
+     #fullscreenToggleBtn {
+         display: none !important;
+     }
+
+     /* Wrap icons automatically */
+     .dropdown-container {
+         gap: 6px;
+         justify-content: flex-end;
+     }
+
+     /* Icon buttons ➜ smaller tap area */
+     .dropdown-container button.btn {
+         padding: 5px !important;
+     }
+
+     /* Icon size reduce slightly */
+     .dropdown-container i {
+         font-size: 22px !important;
+     }
+
+     /* Notification badge adjust */
+     #notification-badge {
+         transform: translate(0, -5px);
+         font-size: 9px;
+         padding: 3px 5px;
+     }
+
+     /* Dropdown menu must not overflow screen */
+     .dropdown-menu {
+         max-width: 90vw !important;
+         right: 0 !important;
+         left: auto !important;
+     }
+
+     #profile-section {
+         width: 100px;
+
+         margin-left: 48% !important;
+     }
+
+     div#helpsection {
+         margin-left: 27%;
+         width: 10px;
+     }
+ }
+
+ 
+/* ============= DAILY CARD RESPONSIVE ============= */
+@media (max-width: 768px) {
+
+    /* Card header layout fix */
+    .attendance-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    /* Dropdown container full width */
+    .attendance-header .attendance-filters {
+        width: 100% !important;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* Dropdowns become full-width */
+    .attendance-header select {
+        width: 100% !important;
+    }
+
+    /* Chart canvas max width */
+    #dailyAttendanceChart {
+        width: 100% !important;
+        height: auto !important;
+    }
+      .attendance-chart {
+        display: none !important;
+    }
+
+}
+ 
+ 

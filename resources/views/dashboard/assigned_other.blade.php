@@ -1,108 +1,134 @@
 @extends('layouts.app') {{-- Only extend the main layout --}}
 
 @section('content')
-@include('layouts.header') {{-- Include header separately --}}
+    <div class="main-content">
+        <div class="wrapper">
+            <main class="content">
+                <div class="row">
 
-<style>
-    .table .task-column {
-        white-space: normal !important;
-        word-wrap: break-word;
-        max-width: 250px;
-    }
-</style>
+                    <div class="table-responsive">
 
-<body data-topbar="dark">
-    <div id="layout-wrapper">
-        <div class="main-content">
-            <div class="wrapper">
-                <main class="content">
-                    <div class="row">
-                        @if(session('success'))
-                        <div class="alert alert-success" id="success-message">
-                            {{ session('success') }}
+                        <div class="email-header mb-3">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h4 class="mb-0"><i class="fa-solid fa-diagram-project"></i> Task Assigned To Other</h4>
+                                    <p class="mb-0 opacity-75">Check here to tasks details.</p>
+                                </div>
+
+                            </div>
                         </div>
-                        @endif
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
+                        <table class="table table-bordered table-striped" id="datatable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th class="task-column">Task</th>
+                                    <th>Website</th>
+                                    <th>Deadline</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Assigned To</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($tasks as $index => $task)
                                     <tr>
-                                        <th>Date</th>
-                                        <th class="task-column">Task</th>
-                                        <th>Website</th>
-                                        <th>Remark</th>
-                                        <th>Deadline</th>
-                                        <th>Priority</th>
-                                        <th>Status</th>
-                                        <th>Assigned To</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($tasks as $task)
-                                    <tr>
-                                        <td>{{ $task->date }}</td>
-                                        <td class="task-column">{{ $task->task }}</td>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($task->date)->format('d-M-Y') }}</td>
+                                        <td class="task-column">{{ Str::words($task->task, 20) }}</td>
                                         <td><a href="{{ $task->website }}" target="_blank">{{ $task->website }}</a></td>
-                                         <td>
-                                                            @php
-        $latestRemark = $task->remarks->sortByDesc('created_at')->first();
-    @endphp
+                                        
+                                        <td>{{ \Carbon\Carbon::parse($task->deadline)->format('d-M-Y') }}</td>
 
-    @if($latestRemark)
-        <div>{{ Str::limit($latestRemark->text, 5, '...') }}</div>
-    @else
-        <div class="text-muted">No remarks</div>
-    @endif
-                                                        </td>
-                                        <td>{{ $task->deadline }}</td>
                                         <td>{{ $task->priority }}</td>
                                         <td>{{ $task->status }}</td>
-                                        <td>{{ $task->assignedUser->full_name ?? 'N/A' }}</td>
                                         <td>
+                                            {{ $task->assignedUser()->pluck('full_name')->join(', ') }}
+                                        </td>
+                                        <td class="text-center align-middle" style="min-width: 180px;">
+
+                                            <!-- VIEW BUTTON -->
+                                            <a href="{{ route('tasks.view', $task->id) }}" class="btn btn-sm btn-info me-1"
+                                                title="View Task">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+
+                                            <!-- DELETE FORM -->
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
+                                                class="d-inline"
+                                                onsubmit="return confirm('Are you sure you want to delete this task?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Delete Task">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+
+                                        </td>
+
+
+
+                                        {{-- <td>
                                             <form action="{{ route('tasks.update', $task->id) }}" method="POST">
                                                 @csrf
                                                 @method('PUT')
                                                 <select name="status" class="form-select form-select-sm mb-1">
-                                                    <option value="Pending" {{ $task->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                                                    <option value="In Progress" {{ $task->status == 'In Progress' ? 'selected' : '' }}>In Progress</option>
-                                                    <option value="Completed" {{ $task->status == 'Completed' ? 'selected' : '' }}>Completed</option>
-                                                </select>
-                                                <select name="assigned_to" class="form-select form-select-sm mb-1">
-                                                    <option value="">-- Assign User --</option>
-                                                    @foreach($users as $user)
-                                                    <option value="{{ $user->id }}" {{ $task->assigned_to == $user->id ? 'selected' : '' }}>
-                                                        {{ $user->full_name }}
+                                                    <option value="Pending"
+                                                        {{ $task->status == 'Pending' ? 'selected' : '' }}>
+                                                        Pending</option>
+                                                    <option value="In Progress"
+                                                        {{ $task->status == 'In Progress' ? 'selected' : '' }}>In Progress
                                                     </option>
+                                                    <option value="Completed"
+                                                        {{ $task->status == 'Completed' ? 'selected' : '' }}>Completed
+                                                    </option>
+                                                </select>
+                                             <!-- Blade view -->
+                                                <select name="assigned_to[]" 
+                                                        class="form-select form-select-sm mb-1 assigned_select2" 
+                                                        multiple>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" 
+                                                            {{ in_array($user->id, $task->assigned_to ?? []) ? 'selected' : '' }}>
+                                                            {{ $user->full_name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
-                                                <button type="submit" class="btn btn-sm btn-primary mb-1">Update</button>
+                                                <button type="submit"
+                                                    class="btn btn-sm btn-primary mb-1 w-100 ">Update</button>
                                             </form>
-                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                            <a href="{{ route('tasks.view', parameters: $task->id) }}"
+                                                class="btn btn-sm btn-info w-100 mb-1">view</a>
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
+                                                onsubmit="return confirm('Are you sure?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger">Delete</button>
+                                                <button class="btn btn-sm btn-danger w-100 mb-1">Delete</button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="8">No tasks assigned by you.</td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                </main>
-            </div>
+                </div>
+            </main>
         </div>
     </div>
-</body>
+    <script>
+        $(document).ready(function() {
+            $('.assigned_select2').select2({
+                placeholder: "Select users",
+                width: '100%'
+            });
+        });
+    </script>
 
-<script>
-    setTimeout(() => {
-        const msg = document.getElementById('success-message');
-        if (msg) msg.style.display = 'none';
-    }, 3000);
-</script>
+    <script>
+        setTimeout(() => {
+            const msg = document.getElementById('success-message');
+            if (msg) msg.style.display = 'none';
+        }, 3000);
+    </script>
 @endsection

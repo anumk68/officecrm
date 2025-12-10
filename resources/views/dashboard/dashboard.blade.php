@@ -1,97 +1,84 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.header')
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="email-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h4 class="mb-0"><i class="fa-solid fa-list-check"></i> All Tasks list</h4>
+                            <p class="mb-0 opacity-75">Check your today task list.</p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <form id="bulkDeleteForm" method="POST" action="{{ route('tasks.bulk.delete') }}">
+                                @csrf
+                                <button type="submit" class="btn btn-danger" id="bulkDeleteBtn" disabled>
+                                    <i class="fa-solid fa-trash"></i> All Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="datatable"
+                                        class="table table-bordered dt-responsive table-striped   w-100 text-center">
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox" id="selectAll"></th>
+                                                <th>#</th>
+                                                <th>Date</th>
+                                                <th>Task</th>
+                                                <th>Website</th>
+                                             
+                                                <th>Deadline</th>
+                                          
+                                                <th>Status</th>
+                                                <th>Assigned By</th>
 
-    <body data-topbar="dark">
-        <div id="layout-wrapper">
-            <div class="main-content">
-                <div class="page-content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <table id="datatable" class="table table-bordered dt-responsive nowrap w-100 text-center">
-                                            <thead>
+                                               
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($tasks as $index => $task)
                                                 <tr>
-                                                    <th>Date</th>
-                                                    <th>Task</th>
-                                                    <th>Website</th>
-                                                    <th>Remark</th>
-                                                    <th>Deadline</th>
-                                                    <th>Priority</th>
-                                                    <th>Status</th>
-                                                    <th>Assigned To</th>
-                                                    <th>Actions</th>
+                                                    <td>
+                                                        <input type="checkbox" name="task_ids[]" form="bulkDeleteForm"
+                                                            value="{{ $task->id }}" class="selectItem">
+                                                    </td>
+                                                    <td>{{ $index + 1 }}</td>
+
+                                                    <td>{{ \Carbon\Carbon::parse($task->date)->format('d-M-Y') }}</td>
+                                                    <td class="task">{{ Str::words($task->task, 10) }}</td>
+
+                                                    <td class="website">
+                                                        <a href="{{ $task->website }}" target="_blank" class="web-site">
+                                                            {{ Str::limit($task->website, 30) }}
+                                                        </a>
+                                                    </td>
+                                                  
+
+                                                    <td>{{ \Carbon\Carbon::parse($task->deadline)->format('d-M-Y') }}</td>
+                                                 
+                                                    <td>{{ $task->status }}</td>
+                                                    <td>{{ $task->assigner?->full_name ?? 'N/A' }}</td>
+                                                     
+                                                    <td>
+
+                                                        <!-- view the task -->
+                                                        <a href="{{ route('tasks.view', parameters: $task->id) }}"
+                                                            class="btn btn-sm btn-warning w-100 mb-1">view</a>
+
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @forelse($tasks as $task)
-                                                    <tr>
-                                                        <td>{{ $task->date }}</td>
-                                                        <td class="task">{{ $task->task }}</td>
-                                                        <td class="website">
-                                                            <a href="{{ $task->website }}" target="_blank" class="web-site">
-                                                                {{ Str::limit($task->website, 30) }}
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            @php
-                                                                $latestRemark = $task->remarks->sortByDesc('created_at')->first();
-                                                            @endphp
-                                                            @if($latestRemark)
-                                                                <div>{{ Str::limit($latestRemark->text, 5, '...') }}</div>
-                                                            @else
-                                                                <div class="text-muted">No remarks</div>
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $task->deadline }}</td>
-                                                        <td>{{ $task->priority }}</td>
-                                                        <td>{{ $task->status }}</td>
-                                                        <td>{{ $task->assignedUser?->full_name ?? 'Unassigned' }}</td>
-                                                        <td>
-                                                            <form action="{{ route('tasks.update', $task->id) }}" method="POST"
-                                                                class="mb-1">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <select name="status" class="form-select form-select-sm mb-1">
-                                                                    <option {{ $task->status == 'Pending' ? 'selected' : '' }}>
-                                                                        Pending</option>
-                                                                    <option {{ $task->status == 'In Progress' ? 'selected' : '' }}>In Progress</option>
-                                                                    <option {{ $task->status == 'Completed' ? 'selected' : '' }}>
-                                                                        Completed</option>
-                                                                </select>
-                                                                <select name="assigned_to"
-                                                                    class="form-select form-select-sm mb-1">
-                                                                    <option value="">-- Assign User --</option>
-                                                                    @foreach($users as $user)
-                                                                        <option value="{{ $user->id }}" {{ $task->assigned_to == $user->id ? 'selected' : '' }}>
-                                                                            {{ $user->full_name }} ({{ $user->role }})
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                                <button class="btn btn-sm btn-success w-100">Update</button>
-                                                            </form>
-                                                            <!-- view the task -->
-                                                            <a href="{{ route('tasks.view', parameters: $task->id) }}"
-                                                                class="btn btn-sm btn-info w-100 mb-1">view</a>
-                                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
-                                                                onsubmit="return confirm('Delete this task?')">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button class="btn btn-sm btn-danger w-100">Delete</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td colspan="8" class="text-center">No tasks available.</td>
-                                                    </tr>
-                                                @endforelse
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -99,6 +86,22 @@
                 </div>
             </div>
         </div>
-    </body>
+    </div>
+    <script>
+        const selectAll = document.getElementById('selectAll');
+        const checkboxes = document.querySelectorAll('.selectItem');
+        const deleteBtn = document.getElementById('bulkDeleteBtn');
 
+        selectAll.addEventListener('click', function() {
+            checkboxes.forEach(cb => cb.checked = this.checked);
+            toggleDeleteButton();
+        });
+
+        checkboxes.forEach(cb => cb.addEventListener('change', toggleDeleteButton));
+
+        function toggleDeleteButton() {
+            const anyChecked = [...checkboxes].some(cb => cb.checked);
+            deleteBtn.disabled = !anyChecked;
+        }
+    </script>
 @endsection

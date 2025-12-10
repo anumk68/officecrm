@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('profile_pic')->nullable();
-            $table->enum('role', ['manager', 'team_leader', 'team_member'])->default('team_member');
+            $table->enum('role', ['manager', 'team_leader', 'team_member', 'hr'])->default('team_member');
             $table->boolean('receive_emails')->default(true);
             $table->boolean('terms_accepted')->default(true);
             $table->timestamp('email_verified_at')->nullable();

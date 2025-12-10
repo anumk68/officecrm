@@ -22,3 +22,4 @@ class AddAssignedByToTasksTable extends Migration
         });
     }
 }
+

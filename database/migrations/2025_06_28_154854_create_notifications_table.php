@@ -6,26 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('notifications', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('type');
-            $table->morphs('notifiable');
-            $table->text('data');
-            $table->timestamp('read_at')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();  
+            $table->json('role_targets')->nullable();  
+            $table->string('module')->nullable();
+            $table->string('title');
+            $table->text('message');
+            $table->boolean('is_read')->default(false);  
+            $table->json('read_by')->nullable();  
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('notifications');
     }
 };
+
